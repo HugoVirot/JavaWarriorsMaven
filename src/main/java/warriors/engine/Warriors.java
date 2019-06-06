@@ -1,10 +1,18 @@
 package warriors.engine;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.stream.JsonReader;
 import warriors.contracts.*;
 import warriors.contracts.GameState;
 import warriors.contracts.Hero;
 import warriors.contracts.Map;
 
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -29,6 +37,21 @@ public class Warriors implements WarriorsAPI {
 
         this.listeMap = new ArrayList<>();
         warriors.engine.Map nouvelleMap1 = new warriors.engine.Map("CampusMap", 64);
+        //récupérer le json et le lire (le transformer en Map)
+
+        Reader reader = null;
+
+        try {
+            reader = new FileReader("./src/main/resources/plateauJoueur.json");
+            System.out.println("fichier chargé");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Gson g = new Gson();                      //définit objet librairie Gson
+        JsonObject plateauJoueur = g.fromJson(reader, JsonObject.class); //récupération données json dans objet plateaujoueur
+        warriors.engine.Map nouvelleMap = new warriors.engine.Map(plateauJoueur.get("name").getAsString(), plateauJoueur.get("numberOfCase").getAsInt()); //création map selon données plateau joueur
+        System.out.println(nouvelleMap);
 
         Arme arc = new Arme("arc", 1);
         Case caseArc = new Case(arc);
@@ -49,6 +72,13 @@ public class Warriors implements WarriorsAPI {
 
         Events vide = new Events();
         Case CaseVide = new Case(vide);
+
+        for (int i = 0; i < plateauJoueur.get("numberOfCase").getAsInt(); i++) {   //boucle qui remplit le plateau
+//            List casesDuPlateau = plateauJoueur.get("casesPlateau");
+//            nouvelleMap.addToPlateau
+
+        }
+
 
         nouvelleMap1.addToPlateau(CaseVide, 0);
         nouvelleMap1.addToPlateau(caseEclair, 1);
@@ -116,7 +146,9 @@ public class Warriors implements WarriorsAPI {
         nouvelleMap1.addToPlateau(CaseVide, 63);
         nouvelleMap1.addToPlateau(CaseVide, 64);
 
-        listeMap.add(nouvelleMap1);
+//        Gson g = new Gson();
+//        System.out.println(g.toJson(nouvelleMap1));
+//        listeMap.add(nouvelleMap1);
     }
 
     @Override
@@ -156,22 +188,22 @@ public class Warriors implements WarriorsAPI {
             //System.out.println(gameState.getHero());
             String result = " ";
 
-            System.out.println(  "niveau d'attaque : " + hero.getAttackLevel() +"  --"+ " niveau de vie : " + hero.getLife());
+            System.out.println("niveau d'attaque : " + hero.getAttackLevel() + "  --" + " niveau de vie : " + hero.getLife());
 
             if ("ennemi".equals(caseActuelle.getEvent().getType())) {
                 Events ennemi = caseActuelle.getEvent();
                 message = message + "\nVous etes sur une case ennemi : c'est un " + ennemi.getName() + " il a " + ennemi.getPointsDeVie() + " points de vie et " + ennemi.getPointsAttaque() + " points d'attaque";
 
                 ennemi.setPointsDeVie(ennemi.getPointsDeVie() - hero.getAttackLevel());
-                message = message + "\nVous frappez l'ennemi et il perd " +hero.getAttackLevel() + " points de vie";
+                message = message + "\nVous frappez l'ennemi et il perd " + hero.getAttackLevel() + " points de vie";
                 if (ennemi.getPointsDeVie() - hero.getAttackLevel() <= 0) {
                     message = message + "\nVous avez tue " + ennemi.getName();
                     Events vide = new Events();
                     Case caseVide = new Case(vide);
-                    ((warriors.engine.Map)plateau).addToPlateau(caseVide,gameState.getCurrentCase());
+                    ((warriors.engine.Map) plateau).addToPlateau(caseVide, gameState.getCurrentCase());
                     System.out.println("point d'arret");
                 } else {
-                    ((LocalHero) hero).setNiveauVie(hero.getLife()- ennemi.getPointsAttaque());
+                    ((LocalHero) hero).setNiveauVie(hero.getLife() - ennemi.getPointsAttaque());
                     message = message + "\nVous etes dans un sale etat le " + ennemi.getName() + " vous a inflige " + ennemi.getPointsAttaque() + ", il part en courant !";
                 }
 
@@ -179,7 +211,7 @@ public class Warriors implements WarriorsAPI {
                 Events potion = caseActuelle.getEvent();
                 message = message + "\nVous etes sur une case potion, c'est une " + potion.getName() + ", elle vous rend " + potion.getPointsDeVie() + " points de vie";
                 ((LocalHero) hero).setNiveauVie(hero.getLife() + potion.getPointsDeVie());
-                if (hero.getLife() > ((LocalHero) hero).getMaxLife()){
+                if (hero.getLife() > ((LocalHero) hero).getMaxLife()) {
                     ((LocalHero) hero).setNiveauVie(((LocalHero) hero).getMaxLife());
                     message = message + "\nVotre vie est au maximum !";
                 }
@@ -190,7 +222,7 @@ public class Warriors implements WarriorsAPI {
                     ((LocalHero) hero).setArme(arme);
                     message = message + "\nVous etes sur une case arme, c'est une " + arme.getName() + ", elle vous octroie +" + arme.getPointsAttaque() + " points d'attaque";
                     ((LocalHero) hero).setNiveauAttaque(hero.getAttackLevel() + arme.getPointsAttaque());
-                    if (hero.getAttackLevel() > ((LocalHero) hero).getMaxAttack()){
+                    if (hero.getAttackLevel() > ((LocalHero) hero).getMaxAttack()) {
                         ((LocalHero) hero).setNiveauAttaque(((LocalHero) hero).getMaxAttack());
                         message = message + "\nVotre niveau d'attaque est au maximum !";
                     }
@@ -204,7 +236,7 @@ public class Warriors implements WarriorsAPI {
                     ((LocalHero) hero).setSort(sort);
                     message = message + "\nVous etes sur une case sort, c'est un " + sort.getName() + ", il vous octroie +" + sort.getPointsAttaque() + " points d'attaque";
                     ((LocalHero) hero).setNiveauAttaque(hero.getAttackLevel() + sort.getPointsAttaque());
-                    if (hero.getAttackLevel() > ((LocalHero) hero).getMaxAttack()){
+                    if (hero.getAttackLevel() > ((LocalHero) hero).getMaxAttack()) {
                         ((LocalHero) hero).setNiveauAttaque(((LocalHero) hero).getMaxAttack());
                         message = message + "\nVotre niveau d'attaque est au maximum !";
                     }
@@ -212,7 +244,7 @@ public class Warriors implements WarriorsAPI {
                     message = message + "\nVous etes sur une case sort, c'est un(e) " + sort.getName() + ", il (elle) vous est inutile";
                 }
             }
-            if (hero.getLife()==0){
+            if (hero.getLife() == 0) {
                 this.gameState.setGameStatus(GameStatus.GAME_OVER);
                 message = message + "\nVous etes mort ahahahah !!!!!";
             }

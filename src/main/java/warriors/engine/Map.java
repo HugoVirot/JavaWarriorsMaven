@@ -6,16 +6,16 @@ import java.util.List;
 public class Map implements warriors.contracts.Map {
     private String name;
     private int numberOfCase;
-    private List<Case> casePlateau;
+    private List<Case> casesPlateau;
 
     public Map(String name, int numberOfCase) {
         this.name = name;
         this.numberOfCase = numberOfCase;
-        this.casePlateau = new ArrayList<>();
+        this.casesPlateau = new ArrayList<>();
     }
 
     public void addToPlateau(Case uneCase, int index) {
-        casePlateau.add(index, uneCase);
+        casesPlateau.add(index, uneCase);
     }
 
     @Override
@@ -24,11 +24,11 @@ public class Map implements warriors.contracts.Map {
     }
 
     public List<Case> getPlateau() {
-        return casePlateau;
+        return casesPlateau;
     }
 
     public Case getCasePlateau(int index) {
-        return casePlateau.get(index);
+        return casesPlateau.get(index);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class Map implements warriors.contracts.Map {
     }
 
     public Case getNameCase(int i) {
-        return casePlateau.get(i);
+        return casesPlateau.get(i);
     }
 
 }
