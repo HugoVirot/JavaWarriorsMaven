@@ -4,6 +4,8 @@ import warriors.contracts.GameStatus;
 import warriors.contracts.Hero;
 import warriors.contracts.Map;
 
+import java.util.Scanner;
+
 public class GameState implements warriors.contracts.GameState {
     private String playerName;
     private GameStatus gameStatus;
@@ -11,15 +13,16 @@ public class GameState implements warriors.contracts.GameState {
     private Map map;
     private String lastLog;
     private int currentCase;
+    protected Scenario scenario;
 
 
-    public GameState(String playerName,Hero hero, Map map) {
-    this.playerName = playerName;
-    this.hero = hero;
-    this.map = map;
-    this.lastLog = "Debut de partie";
-    this.currentCase = 1;
-    this.gameStatus = GameStatus.IN_PROGRESS;
+    public GameState(String playerName, Hero hero, Map map) {
+        this.playerName = playerName;
+        this.hero = hero;
+        this.map = map;
+        this.lastLog = "Debut de partie";
+        this.currentCase = 1;
+        this.gameStatus = GameStatus.IN_PROGRESS;
     }
 
 
@@ -48,7 +51,7 @@ public class GameState implements warriors.contracts.GameState {
         return map;
     }
 
-    public void setLastLog(String lastLog){
+    public void setLastLog(String lastLog) {
         this.lastLog = lastLog;
     }
 
@@ -62,6 +65,13 @@ public class GameState implements warriors.contracts.GameState {
         return currentCase;
     }
 
+    public void setScenario(Scenario scenario) {
+        this.scenario = scenario;
+    }
+
+    public Scenario getScenario() {
+        return scenario;
+    }
 
     public void setCurrentCase(int currentCase) {
         this.currentCase = currentCase;

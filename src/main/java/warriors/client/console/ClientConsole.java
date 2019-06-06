@@ -2,8 +2,8 @@ package warriors.client.console;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -12,6 +12,7 @@ import warriors.contracts.GameStatus;
 import warriors.contracts.Hero;
 import warriors.contracts.Map;
 import warriors.contracts.WarriorsAPI;
+import warriors.engine.Scenario;
 import warriors.engine.Warriors;
 
 public class ClientConsole {
@@ -19,11 +20,19 @@ public class ClientConsole {
 	private static String MENU_COMMENCER_PARTIE = "1";
 	private static String MENU_QUITTER = "2";
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
+		//System.out.println(args[0]);
 
-		Scanner scanner = new Scanner(new File("src/main/java/warriors/client/console/test.csv"));
+		Scanner scanner = null;
+		try {
+			scanner = new Scanner(new File(args[0]));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+
+
 		Scanner dataScanner = null;
-		List<String> nbreDList = new ArrayList<>();
+		ArrayList nbreDList = new ArrayList<>();
 
 		while (scanner.hasNextLine()) {
 			dataScanner = new Scanner(scanner.nextLine());
@@ -34,10 +43,16 @@ public class ClientConsole {
 				String data = dataScanner.next();
 				nbreDList.add(data);
 			}
-			nbreDList.add(nbreD);
 		}
 		scanner.close();
 		System.out.println(nbreDList);
+
+		Scenario test = new Scenario(nbreDList);
+
+
+
+
+		//------------------
 
 
 
@@ -47,14 +62,14 @@ public class ClientConsole {
 		do {
 			menuChoice = displayMenu(sc);
 			if(menuChoice.equals(MENU_COMMENCER_PARTIE)) {					
-				startGame(warriors, sc);
+				startGame(warriors, sc, test);
 			}			
 		}while(!menuChoice.equals(MENU_QUITTER));
 		sc.close();
 		System.out.println("A bientot");
 	}
 
-	private static void startGame(WarriorsAPI warriors, Scanner sc) {
+	private static void startGame(WarriorsAPI warriors, Scanner sc, Scenario scenario) {
 		System.out.println();
 		System.out.println("Entrez votre nom:");
 		String playerName = sc.nextLine();
@@ -76,6 +91,9 @@ public class ClientConsole {
 		Map choosenMap = warriors.getMaps().get(Integer.parseInt(sc.nextLine()) - 1);
 
 		GameState gameState = warriors.createGame(playerName, chosenHeroe, choosenMap);
+		//------
+		((warriors.engine.GameState)gameState).setScenario(scenario);
+
 		String gameId = gameState.getGameId();
 		while (gameState.getGameStatus() == GameStatus.IN_PROGRESS) {
 			System.out.println(gameState.getLastLog());

@@ -139,7 +139,15 @@ public class Warriors implements WarriorsAPI {
     public GameState nextTurn(String gameID) {
         Map plateau = gameState.getMap();
         String message = "";
-        resultatDe = lancerDe();
+
+        resultatDe = gameState.getScenario().lancerD();
+
+
+
+
+        //resultatDe = lancerDe();
+        // Scenario resultatDe = new Scenario();
+
         Hero hero = gameState.getHero();
         message = message + "Vous avez fait un " + resultatDe;
 
