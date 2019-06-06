@@ -2,6 +2,7 @@ package warriors.client.console;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -18,8 +19,28 @@ public class ClientConsole {
 	private static String MENU_COMMENCER_PARTIE = "1";
 	private static String MENU_QUITTER = "2";
 
-	public static void main(String[] args) {
-				
+	public static void main(String[] args) throws IOException {
+
+		Scanner scanner = new Scanner(new File("src/main/java/warriors/client/console/test.csv"));
+		Scanner dataScanner = null;
+		List<String> nbreDList = new ArrayList<>();
+
+		while (scanner.hasNextLine()) {
+			dataScanner = new Scanner(scanner.nextLine());
+			dataScanner.useDelimiter(",");
+			String nbreD = new String();
+
+			while (dataScanner.hasNext()) {
+				String data = dataScanner.next();
+				nbreDList.add(data);
+			}
+			nbreDList.add(nbreD);
+		}
+		scanner.close();
+		System.out.println(nbreDList);
+
+
+
 		WarriorsAPI warriors = new Warriors();
 		Scanner sc = new Scanner(System.in);
 		String menuChoice = "";
