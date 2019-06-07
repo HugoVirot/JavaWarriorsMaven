@@ -2,10 +2,7 @@ package warriors.client.console;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 import warriors.contracts.GameState;
 import warriors.contracts.GameStatus;
@@ -21,10 +18,9 @@ public class ClientConsole {
     private static String MENU_QUITTER = "2";
 
     public static void main(String[] args) {
-        //System.out.println(args[0]);
-
         ArrayList nbreDList = new ArrayList<>();
         Scenario scenario;
+
         try {
 
             //List<ArrayList> listeScenario = new ArrayList<>();
@@ -33,24 +29,41 @@ public class ClientConsole {
             scanner = new Scanner(new File(args[0]));
             System.out.println("Scenario debug");
             Scanner dataScanner = null;
+            ArrayList listScenar = new ArrayList();
 
             while (scanner.hasNextLine()) {
+                String line = scanner.next();
+                String[] valeurCase = line.split(",");
+                for (int i = 0; i<valeurCase.length; i++){
+                    listScenar.add(valeurCase);
+                    System.out.println(valeurCase[i]);
+                }
+                System.out.println("===");
+            }
+
+            System.out.println("--------------------------------------------------------------");
+
+           /* while (scanner.hasNextLine()) {
                 dataScanner = new Scanner(scanner.nextLine());
                 dataScanner.useDelimiter(",");
-
                 while (dataScanner.hasNext()) {
                     String data = dataScanner.next();
                     nbreDList.add(data);
                 }
             }
+            */
+
+
             scanner.close();
             System.out.println(nbreDList);
-
             scenario = new Scenario(nbreDList);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             System.out.println("Jeu lancer sans scenario");
 
+            scenario = new Scenario();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println();
             scenario = new Scenario();
         }
 
