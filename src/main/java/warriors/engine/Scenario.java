@@ -6,14 +6,17 @@ import java.util.Random;
 
 public class Scenario {
 
-    protected ArrayList scenario;
-    protected int index;
+    private ArrayList scenario;
+    private int index;
+    private Random rand;
 
     public Scenario() {
-
+        this.rand = new Random();
+        this.scenario = null;
     }
 
     public Scenario(ArrayList scenario) {
+        this.rand = new Random();
         this.scenario = scenario;
         this.index = 0;
     }
@@ -21,9 +24,8 @@ public class Scenario {
     public int lancerD() {
         int valeurD = 0;
         if (scenario == null) {
-            Random rand = new Random();
             valeurD = rand.nextInt(6) + 1;
-        }else{
+        } else {
             valeurD = Integer.parseInt(String.valueOf(scenario.get(index)));
             index++;
         }

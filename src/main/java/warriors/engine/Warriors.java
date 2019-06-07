@@ -26,7 +26,6 @@ public class Warriors implements WarriorsAPI {
         listeHeros.add(nouveauHeros3);
         listeHeros.add(nouveauHeros4);
 
-
         this.listeMap = new ArrayList<>();
         warriors.engine.Map nouvelleMap1 = new warriors.engine.Map("CampusMap", 64);
 
@@ -141,9 +140,6 @@ public class Warriors implements WarriorsAPI {
         String message = "";
 
         resultatDe = gameState.getScenario().lancerD();
-
-
-
 
         //resultatDe = lancerDe();
         // Scenario resultatDe = new Scenario();
