@@ -1,14 +1,14 @@
 {
-  "name": "plateaujoueur",
+  "name": "Grotte",
   "numberOfCase": 10,
   "casesPlateau": [
     {
-      "numero": 1,
+      "numero": 0,
       "event": {
-        "name": "eclair",
+        "name": "vide",
         "pointsDeVie": 0,
-        "pointsAttaque": 2,
-        "type": "sort"
+        "pointsAttaque": 0,
+        "type": "vide"
       }
     },
     {

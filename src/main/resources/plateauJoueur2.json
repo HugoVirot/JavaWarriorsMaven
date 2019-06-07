@@ -1,0 +1,26 @@
+{
+  "name": "Foret",
+  "numberOfCase": 20,
+  "casesPlateau": [
+    {"numero":0,"event":{"name":"vide","pointsDeVie":0,"pointsAttaque":0,"type":"vide"}},
+    {"numero":0,"event":{"name":"vide","pointsDeVie":0,"pointsAttaque":0,"type":"vide"}},
+    {"numero":0,"event":{"name":"vide","pointsDeVie":0,"pointsAttaque":0,"type":"vide"}},
+    {"numero":0,"event":{"name":"potion mineure","pointsDeVie":1,"pointsAttaque":0,"type":"potion"}},
+    {"numero":0,"event":{"name":"vide","pointsDeVie":0,"pointsAttaque":0,"type":"vide"}},
+    {"numero":0,"event":{"name":"vide","pointsDeVie":0,"pointsAttaque":0,"type":"vide"}},
+    {"numero":0,"event":{"name":"potion standard","pointsDeVie":2,"pointsAttaque":0,"type":"potion"}},
+    {"numero":0,"event":{"name":"eclair","pointsDeVie":0,"pointsAttaque":2,"type":"sort"}},
+    {"numero":0,"event":{"name":"arc","pointsDeVie":0,"pointsAttaque":1,"type":"arme"}},
+    {"numero":0,"event":{"name":"massue","pointsDeVie":0,"pointsAttaque":3,"type":"arme"}},
+    {"numero":0,"event":{"name":"boule de feu","pointsDeVie":0,"pointsAttaque":7,"type":"sort"}},
+    {"numero":0,"event":{"name":"gobelin","pointsDeVie":6,"pointsAttaque":1,"type":"ennemi"}},
+    {"numero":0,"event":{"name":"gobelin","pointsDeVie":6,"pointsAttaque":1,"type":"ennemi"}},
+    {"numero":0,"event":{"name":"gobelin","pointsDeVie":6,"pointsAttaque":1,"type":"ennemi"}},
+    {"numero":0,"event":{"name":"gobelin","pointsDeVie":6,"pointsAttaque":1,"type":"ennemi"}},
+    {"numero":0,"event":{"name":"sorcier","pointsDeVie":9,"pointsAttaque":2,"type":"ennemi"}},
+    {"numero":0,"event":{"name":"sorcier","pointsDeVie":9,"pointsAttaque":2,"type":"ennemi"}},
+    {"numero":0,"event":{"name":"dragon","pointsDeVie":15,"pointsAttaque":4,"type":"ennemi"}},
+    {"numero":0,"event":{"name":"dragon","pointsDeVie":15,"pointsAttaque":4,"type":"ennemi"}},
+    {"numero":0,"event":{"name":"dragon","pointsDeVie":15,"pointsAttaque":4,"type":"ennemi"}}
+  ]
+}

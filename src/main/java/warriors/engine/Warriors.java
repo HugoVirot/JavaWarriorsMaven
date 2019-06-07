@@ -2,9 +2,7 @@ package warriors.engine;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.stream.JsonReader;
 import warriors.contracts.*;
 import warriors.contracts.GameState;
 import warriors.contracts.Hero;
@@ -24,6 +22,7 @@ public class Warriors implements WarriorsAPI {
     int resultatDe;
 
     public Warriors() {
+        //***********************************liste des héros************************************
         this.listeHeros = new ArrayList<Hero>();
         Hero nouveauHeros1 = new Guerrier("Benji", "benji.jpg", 10, 6);
         Hero nouveauHeros2 = new Guerrier("Toinou", "toinou.jpg", 8, 9);
@@ -35,50 +34,237 @@ public class Warriors implements WarriorsAPI {
         listeHeros.add(nouveauHeros4);
 
 
+        //*****************************initialisation liste maps et maps***************************************
         this.listeMap = new ArrayList<>();
         warriors.engine.Map nouvelleMap1 = new warriors.engine.Map("CampusMap", 64);
-        //récupérer le json et le lire (le transformer en Map)
 
-        Reader reader = null;
 
-        try {
-            reader = new FileReader("./src/main/resources/plateauJoueur.json");
-            System.out.println("fichier chargé");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Gson g = new Gson();                      //définit objet librairie Gson
-        JsonObject plateauJoueur = g.fromJson(reader, JsonObject.class); //récupération données json dans objet plateaujoueur
-        warriors.engine.Map nouvelleMap = new warriors.engine.Map(plateauJoueur.get("name").getAsString(), plateauJoueur.get("numberOfCase").getAsInt()); //création map selon données plateau joueur
-        System.out.println(nouvelleMap);
-
+        //****************************************on définit les différents types de cases possibles**************************************
         Arme arc = new Arme("arc", 1);
         Case caseArc = new Case(arc);
         Arme massue = new Arme("massue", 3);
         Case caseMassue = new Case(massue);
-        Arme epee = new Arme("epee", 5);
+        Arme epee = new Arme("épée", 5);
         Case caseEpee = new Case(epee);
-        Sort eclair = new Sort("eclair", 2);
+        Sort eclair = new Sort("éclair", 2);
         Case caseEclair = new Case(eclair);
         Sort bouledefeu = new Sort("boule de feu", 7);
         Case caseBouleDeFeu = new Case(bouledefeu);
         Potion potionMineure = new Potion("potion mineure", 1);
         Case casePotionMineure = new Case(potionMineure);
         Potion potionStandard = new Potion("potion standard", 2);
-        Case casePotionstandard = new Case(potionStandard);
+        Case casePotionStandard = new Case(potionStandard);
         Potion potionGrande = new Potion("grande potion", 5);
         Case caseGrandePotion = new Case(potionGrande);
-
         Events vide = new Events();
         Case CaseVide = new Case(vide);
 
-        for (int i = 0; i < plateauJoueur.get("numberOfCase").getAsInt(); i++) {   //boucle qui remplit le plateau
-//            List casesDuPlateau = plateauJoueur.get("casesPlateau");
-//            nouvelleMap.addToPlateau
 
+        //************************************récupération fichier json plateau1**********************************************
+
+        Reader reader = null;
+        try {
+            reader = new FileReader("./src/main/resources/plateauJoueur.json");
+            //System.out.println("fichier chargé");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
+        Gson g = new Gson();                                               //définit objet librairie Gson
+        JsonObject plateauJoueur = g.fromJson(reader, JsonObject.class);   //récupération données json dans objet plateaujoueur
+        warriors.engine.Map nouvelleMap = new warriors.engine.Map(plateauJoueur.get("name").getAsString(), plateauJoueur.get("numberOfCase").getAsInt()); //création map selon données plateau joueur
+
+        JsonArray casesDuPlateau = plateauJoueur.get("casesPlateau").getAsJsonArray();   //récupérer tableau d'objets (jsonElement) contenant les propriétés des cases (numéro + objet)
+        //System.out.println(casesDuPlateau);
+        ArrayList casesDuPlateauListe = new ArrayList<>();
+
+
+        //************************************récupération fichier json plateau2**********************************************
+
+        Reader reader2 = null;
+        try {
+            reader2 = new FileReader("./src/main/resources/plateauJoueur2.json");
+            //System.out.println("fichier chargé");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Gson g2 = new Gson();                                               //définit objet librairie Gson
+        JsonObject plateauJoueur2 = g2.fromJson(reader2, JsonObject.class);   //récupération données json dans objet plateaujoueur
+        warriors.engine.Map nouvelleMap2 = new warriors.engine.Map(plateauJoueur2.get("name").getAsString(), plateauJoueur2.get("numberOfCase").getAsInt()); //création map selon données plateau joueur
+
+        JsonArray casesDuPlateau2 = plateauJoueur2.get("casesPlateau").getAsJsonArray();   //récupérer tableau d'objets (jsonElement) contenant les propriétés des cases (numéro + objet)
+        //System.out.println(casesDuPlateau);
+        ArrayList casesDuPlateauListe2 = new ArrayList<>();
+
+
+        //************************************récupération fichier json plateau de base**********************************************
+
+        Reader reader3 = null;
+        try {
+            reader3 = new FileReader("./src/main/resources/plateauReference.json");
+            //System.out.println("fichier chargé");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Gson g3 = new Gson();                                               //définit objet librairie Gson
+        JsonObject plateauJoueur3 = g3.fromJson(reader3, JsonObject.class);   //récupération données json dans objet plateaujoueur
+        warriors.engine.Map nouvelleMap3 = new warriors.engine.Map(plateauJoueur3.get("name").getAsString(), plateauJoueur3.get("numberOfCase").getAsInt()); //création map selon données plateau joueur
+
+        JsonArray casesDuPlateau3 = plateauJoueur3.get("casesPlateau").getAsJsonArray();   //récupérer tableau d'objets (jsonElement) contenant les propriétés des cases (numéro + objet)
+        //System.out.println(casesDuPlateau);
+        ArrayList casesDuPlateauListe3 = new ArrayList<>();
+
+
+
+
+        //**********************************boucle qui remplit le plateau 1*********************************************
+        for (int i = 0; i < plateauJoueur.get("numberOfCase").getAsInt(); i++) {
+
+            JsonObject contenuCase;          //création variable qui va contenir les infos de la case
+            contenuCase = (JsonObject)casesDuPlateau.get(i);        //ajout dans cette variable des infos de la case i du jsonarray
+            casesDuPlateauListe.add(contenuCase);           //ajout de ces infos dans l'arraylist
+            String nomEvenement = (((JsonObject)contenuCase.get("event")).get("name").getAsString());
+            //System.out.println(contenuCase);
+            //créer la case en fonction de l'évènement
+            if (nomEvenement.equals("arc")) {
+                nouvelleMap.addToPlateau(caseArc, i);
+            }
+            else if (nomEvenement.equals("massue")){
+                nouvelleMap.addToPlateau(caseMassue, i);
+            }
+            else if (nomEvenement.equals("épée")){
+                nouvelleMap.addToPlateau(caseEpee, i);
+            }
+            else if (nomEvenement.equals("éclair")) {
+                nouvelleMap.addToPlateau(caseEclair, i);
+            }
+            else if (nomEvenement.equals("boule de feu")){
+                nouvelleMap.addToPlateau(caseBouleDeFeu, i);
+            }
+            else if (nomEvenement.equals("potion mineure")){
+                nouvelleMap.addToPlateau(casePotionMineure, i);
+            }
+            else if (nomEvenement.equals("potion standard")){
+                nouvelleMap.addToPlateau(casePotionStandard, i);
+            }
+            else if (nomEvenement.equals("grande potion")) {
+                nouvelleMap.addToPlateau(caseGrandePotion, i);
+            }
+            else if ((nomEvenement.equals("gobelin"))){
+                nouvelleMap.addToPlateau(new Case(new Ennemi("gobelin", 1, 6)), i);
+            }
+            else if ((nomEvenement.equals("sorcier"))){
+                nouvelleMap.addToPlateau(new Case(new Ennemi("sorcier", 2, 9)), i);
+            }
+            else if ((nomEvenement.equals("dragon"))){
+                nouvelleMap.addToPlateau(new Case(new Ennemi("dragon", 4, 15)), i);
+            }
+            else{
+                nouvelleMap.addToPlateau(CaseVide, i);
+            }
+        }
+
+        listeMap.add(nouvelleMap);
+
+        //**********************************boucle qui remplit le plateau 2*********************************************
+        for (int i = 0; i < plateauJoueur2.get("numberOfCase").getAsInt(); i++) {
+
+            JsonObject contenuCase;          //création variable qui va contenir les infos de la case
+            contenuCase = (JsonObject)casesDuPlateau2.get(i);        //ajout dans cette variable des infos de la case i du jsonarray
+            casesDuPlateauListe2.add(contenuCase);           //ajout de ces infos dans l'arraylist
+            String nomEvenement = (((JsonObject)contenuCase.get("event")).get("name").getAsString());
+            //System.out.println(contenuCase);
+            //créer la case en fonction de l'évènement
+            if (nomEvenement.equals("arc")) {
+                nouvelleMap2.addToPlateau(caseArc, i);
+            }
+            else if (nomEvenement.equals("massue")){
+                nouvelleMap2.addToPlateau(caseMassue, i);
+            }
+            else if (nomEvenement.equals("épée")){
+                nouvelleMap2.addToPlateau(caseEpee, i);
+            }
+            else if (nomEvenement.equals("éclair")) {
+                nouvelleMap2.addToPlateau(caseEclair, i);
+            }
+            else if (nomEvenement.equals("boule de feu")){
+                nouvelleMap2.addToPlateau(caseBouleDeFeu, i);
+            }
+            else if (nomEvenement.equals("potion mineure")){
+                nouvelleMap2.addToPlateau(casePotionMineure, i);
+            }
+            else if (nomEvenement.equals("potion standard")){
+                nouvelleMap2.addToPlateau(casePotionStandard, i);
+            }
+            else if (nomEvenement.equals("grande potion")) {
+                nouvelleMap2.addToPlateau(caseGrandePotion, i);
+            }
+            else if ((nomEvenement.equals("gobelin"))){
+                nouvelleMap2.addToPlateau(new Case(new Ennemi("gobelin", 1, 6)), i);
+            }
+            else if ((nomEvenement.equals("sorcier"))){
+                nouvelleMap2.addToPlateau(new Case(new Ennemi("sorcier", 2, 9)), i);
+            }
+            else if ((nomEvenement.equals("dragon"))){
+                nouvelleMap2.addToPlateau(new Case(new Ennemi("dragon", 4, 15)), i);
+            }
+            else{
+                nouvelleMap2.addToPlateau(CaseVide, i);
+            }
+        }
+
+        listeMap.add(nouvelleMap2);
+
+        //**********************************boucle qui remplit le plateau de base*********************************************
+        for (int i = 0; i < plateauJoueur3.get("numberOfCase").getAsInt(); i++) {
+
+            JsonObject contenuCase;          //création variable qui va contenir les infos de la case
+            contenuCase = (JsonObject)casesDuPlateau3.get(i);        //ajout dans cette variable des infos de la case i du jsonarray
+            casesDuPlateauListe3.add(contenuCase);           //ajout de ces infos dans l'arraylist
+            String nomEvenement = (((JsonObject)contenuCase.get("event")).get("name").getAsString());
+            //System.out.println(contenuCase);
+            //créer la case en fonction de l'évènement
+            if (nomEvenement.equals("arc")) {
+                nouvelleMap3.addToPlateau(caseArc, i);
+            }
+            else if (nomEvenement.equals("massue")){
+                nouvelleMap3.addToPlateau(caseMassue, i);
+            }
+            else if (nomEvenement.equals("épée")){
+                nouvelleMap3.addToPlateau(caseEpee, i);
+            }
+            else if (nomEvenement.equals("éclair")) {
+                nouvelleMap3.addToPlateau(caseEclair, i);
+            }
+            else if (nomEvenement.equals("boule de feu")){
+                nouvelleMap3.addToPlateau(caseBouleDeFeu, i);
+            }
+            else if (nomEvenement.equals("potion mineure")){
+                nouvelleMap3.addToPlateau(casePotionMineure, i);
+            }
+            else if (nomEvenement.equals("potion standard")){
+                nouvelleMap3.addToPlateau(casePotionStandard, i);
+            }
+            else if (nomEvenement.equals("grande potion")) {
+                nouvelleMap3.addToPlateau(caseGrandePotion, i);
+            }
+            else if ((nomEvenement.equals("gobelin"))){
+                nouvelleMap3.addToPlateau(new Case(new Ennemi("gobelin", 1, 6)), i);
+            }
+            else if ((nomEvenement.equals("sorcier"))){
+                nouvelleMap3.addToPlateau(new Case(new Ennemi("sorcier", 2, 9)), i);
+            }
+            else if ((nomEvenement.equals("dragon"))){
+                nouvelleMap3.addToPlateau(new Case(new Ennemi("dragon", 4, 15)), i);
+            }
+            else{
+                nouvelleMap3.addToPlateau(CaseVide, i);
+            }
+        }
+
+        listeMap.add(nouvelleMap3);
 
         nouvelleMap1.addToPlateau(CaseVide, 0);
         nouvelleMap1.addToPlateau(caseEclair, 1);
@@ -111,7 +297,7 @@ public class Warriors implements WarriorsAPI {
         nouvelleMap1.addToPlateau(casePotionMineure, 28);
         nouvelleMap1.addToPlateau(casePotionMineure, 29);
         nouvelleMap1.addToPlateau(new Case(new Ennemi("gobelin", 1, 6)), 30);
-        nouvelleMap1.addToPlateau(casePotionstandard, 31);
+        nouvelleMap1.addToPlateau(casePotionStandard, 31);
         nouvelleMap1.addToPlateau(new Case(new Ennemi("sorcier", 2, 9)), 32);
         nouvelleMap1.addToPlateau(casePotionMineure, 33);
         nouvelleMap1.addToPlateau(CaseVide, 34);
@@ -119,11 +305,11 @@ public class Warriors implements WarriorsAPI {
         nouvelleMap1.addToPlateau(new Case(new Ennemi("sorcier", 2, 9)), 36);
         nouvelleMap1.addToPlateau(new Case(new Ennemi("sorcier", 2, 9)), 37);
         nouvelleMap1.addToPlateau(caseMassue, 38);
-        nouvelleMap1.addToPlateau(casePotionstandard, 39);
+        nouvelleMap1.addToPlateau(casePotionStandard, 39);
         nouvelleMap1.addToPlateau(new Case(new Ennemi("sorcier", 2, 9)), 40);
         nouvelleMap1.addToPlateau(caseGrandePotion, 41);
         nouvelleMap1.addToPlateau(caseEpee, 42);
-        nouvelleMap1.addToPlateau(casePotionstandard, 43);
+        nouvelleMap1.addToPlateau(casePotionStandard, 43);
         nouvelleMap1.addToPlateau(new Case(new Ennemi("sorcier", 2, 9)), 44);
         nouvelleMap1.addToPlateau(new Case(new Ennemi("dragon", 4, 15)), 45);
         nouvelleMap1.addToPlateau(CaseVide, 46);
@@ -146,8 +332,6 @@ public class Warriors implements WarriorsAPI {
         nouvelleMap1.addToPlateau(CaseVide, 63);
         nouvelleMap1.addToPlateau(CaseVide, 64);
 
-//        Gson g = new Gson();
-//        System.out.println(g.toJson(nouvelleMap1));
 //        listeMap.add(nouvelleMap1);
     }
 
@@ -204,7 +388,7 @@ public class Warriors implements WarriorsAPI {
                     System.out.println("point d'arret");
                 } else {
                     ((LocalHero) hero).setNiveauVie(hero.getLife() - ennemi.getPointsAttaque());
-                    message = message + "\nVous etes dans un sale etat le " + ennemi.getName() + " vous a inflige " + ennemi.getPointsAttaque() + ", il part en courant !";
+                    message = message + "\nVous etes dans un sale etat ! Le " + ennemi.getName() + " vous a inflige " + ennemi.getPointsAttaque() + ", il part en courant !";
                 }
 
             } else if ("potion".equals(caseActuelle.getEvent().getType())) {
