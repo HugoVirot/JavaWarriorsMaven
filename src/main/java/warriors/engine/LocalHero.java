@@ -7,15 +7,30 @@ public abstract class LocalHero implements warriors.contracts.Hero {
     protected int niveauAttaque;
     protected Arme arme;
     protected Sort sort;
+    protected String type;
+    protected String moyenAttaque;
+    protected String moyenDefense;
+    protected int id;
 
     public LocalHero() {
     }
 
-    public LocalHero(String nomWarrior, String imageWarrior, int niveauVieWarrior, int niveauAttaqueWarrior) {
+    public LocalHero(String nomWarrior, String imageWarrior, int niveauVieWarrior, int niveauAttaqueWarrior){
         nom = nomWarrior;
         image = imageWarrior;
         niveauVie = niveauVieWarrior;
         niveauAttaque = niveauAttaqueWarrior;
+    }
+
+    public LocalHero(String nomWarrior, String imageWarrior, int niveauVieWarrior, int niveauAttaqueWarrior, String typeWarrior, String moyenAttaqueWarrior, String moyenDefenseWarrior, int idWarrior) {
+        nom = nomWarrior;
+        image = imageWarrior;
+        niveauVie = niveauVieWarrior;
+        niveauAttaque = niveauAttaqueWarrior;
+        type = typeWarrior;
+        moyenAttaque = moyenAttaqueWarrior;
+        moyenDefense = moyenDefenseWarrior;
+        id = idWarrior;
     }
 
     public Arme getArme() {
@@ -35,6 +50,10 @@ public abstract class LocalHero implements warriors.contracts.Hero {
     @Override
     public String getName() {
         return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 
     @Override
@@ -58,6 +77,10 @@ public abstract class LocalHero implements warriors.contracts.Hero {
     @Override
     public int getAttackLevel() {
         return niveauAttaque;
+    }
+
+    public int getId() {
+        return id;
     }
 
     @Override
