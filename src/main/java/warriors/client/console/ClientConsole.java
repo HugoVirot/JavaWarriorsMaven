@@ -9,6 +9,7 @@ import warriors.contracts.GameStatus;
 import warriors.contracts.Hero;
 import warriors.contracts.Map;
 import warriors.contracts.WarriorsAPI;
+import warriors.engine.Connect;
 import warriors.engine.Scenario;
 import warriors.engine.Warriors;
 
@@ -18,6 +19,7 @@ public class ClientConsole {
     private static String MENU_QUITTER = "2";
 
     public static void main(String[] args) {
+        Connect connexion = new Connect();
         ArrayList nbreDList = new ArrayList<>();
         Scenario scenario;
 
