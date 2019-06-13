@@ -8,15 +8,26 @@ public class Case {
 
     }
 
+    /**
+     *
+     * @param event
+     */
     public Case(Events event) {
         this.event = event;
     }
 
+    /**
+     *
+     * @return
+     */
     public Events getEvent() {
         return event;
     }
 
-
+    /**
+     *
+     * @return
+     */
 
     @Override
     public String toString() {

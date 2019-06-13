@@ -8,16 +8,28 @@ public class Potion extends Surprise{
     this.type = "potion";
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getPointsDeVie() {
         return super.getPointsDeVie();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String getName() {
         return super.getName();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return "C'est une " + name + " elle vous remet sur pieds ! + " + pointsDeVie + " points de vie" ;

@@ -7,11 +7,19 @@ public class Guerrier extends LocalHero {
         super(nom,image,niveauDeVie,forceAttaque);
     }
 
+    /**
+     *
+     * @return niveau max de la vie du héro
+     */
     @Override
     public int getMaxLife() {
         return MAXLIFE;
     }
 
+    /**
+     *
+     * @return niveau max de l'attaque du héro
+     */
     @Override
     public int getMaxAttack() {
         return MAXATTACK;

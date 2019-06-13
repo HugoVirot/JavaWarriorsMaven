@@ -6,10 +6,20 @@ public class Magicien extends LocalHero {
     public Magicien(String nom, String image, int niveauDeVie, int forceAttaque) {
         super(nom,image,niveauDeVie,forceAttaque);
     }
+
+    /**
+     *
+     * @return
+     */
     @Override
     public int getMaxLife() {
         return MAXLIFE;
     }
+
+    /**
+     *
+     * @return
+     */
 
     @Override
     public int getMaxAttack() {

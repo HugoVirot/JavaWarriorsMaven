@@ -10,10 +10,10 @@ import java.util.List;
 import java.util.Random;
 
 public class Warriors implements WarriorsAPI {
-    private List<Hero> listeHeros;
-    private List<Map> listeMap;
     warriors.engine.GameState gameState;
     int resultatDe;
+    private List<Hero> listeHeros;
+    private List<Map> listeMap;
 
     public Warriors() {
         this.listeHeros = new ArrayList<Hero>();
@@ -118,23 +118,42 @@ public class Warriors implements WarriorsAPI {
         listeMap.add(nouvelleMap1);
     }
 
+    /**
+     * @return Liste des héros à choisir
+     */
+
     @Override
     public List<Hero> getHeroes() {
         return listeHeros;
     }
 
+    /**
+     * @return Liste des maps à choisir
+     */
     @Override
     public List<Map> getMaps() {
         return listeMap;
     }
 
+    /**
+     * @param playerName the name of the player
+     * @param hero       the chosen hero for the game
+     * @param map        the chosen map for the game
+     * @return l'état du jeu actuel
+     */
     @Override
     public GameState createGame(String playerName, Hero hero, Map map) {
         gameState = new warriors.engine.GameState(playerName, hero, map);
         return gameState;
     }
 
+    /**
+     * @param gameID the ID of the game
+     * @return l'avancé du joueur sur le plateau
+     */
     @Override
+
+
     public GameState nextTurn(String gameID) {
         Map plateau = gameState.getMap();
         String message = "";
@@ -160,22 +179,22 @@ public class Warriors implements WarriorsAPI {
             //System.out.println(gameState.getHero());
             String result = " ";
 
-            System.out.println(  "niveau d'attaque : " + hero.getAttackLevel() +"  --"+ " niveau de vie : " + hero.getLife());
+            System.out.println("niveau d'attaque : " + hero.getAttackLevel() + "  --" + " niveau de vie : " + hero.getLife());
 
             if ("ennemi".equals(caseActuelle.getEvent().getType())) {
                 Events ennemi = caseActuelle.getEvent();
                 message = message + "\nVous etes sur une case ennemi : c'est un " + ennemi.getName() + " il a " + ennemi.getPointsDeVie() + " points de vie et " + ennemi.getPointsAttaque() + " points d'attaque";
 
                 ennemi.setPointsDeVie(ennemi.getPointsDeVie() - hero.getAttackLevel());
-                message = message + "\nVous frappez l'ennemi et il perd " +hero.getAttackLevel() + " points de vie";
+                message = message + "\nVous frappez l'ennemi et il perd " + hero.getAttackLevel() + " points de vie";
                 if (ennemi.getPointsDeVie() - hero.getAttackLevel() <= 0) {
                     message = message + "\nVous avez tue " + ennemi.getName();
                     Events vide = new Events();
                     Case caseVide = new Case(vide);
-                    ((warriors.engine.Map)plateau).addToPlateau(caseVide,gameState.getCurrentCase());
+                    ((warriors.engine.Map) plateau).addToPlateau(caseVide, gameState.getCurrentCase());
                     System.out.println("point d'arret");
                 } else {
-                    ((LocalHero) hero).setNiveauVie(hero.getLife()- ennemi.getPointsAttaque());
+                    ((LocalHero) hero).setNiveauVie(hero.getLife() - ennemi.getPointsAttaque());
                     message = message + "\nVous etes dans un sale etat le " + ennemi.getName() + " vous a inflige " + ennemi.getPointsAttaque() + ", il part en courant !";
                 }
 
@@ -183,7 +202,7 @@ public class Warriors implements WarriorsAPI {
                 Events potion = caseActuelle.getEvent();
                 message = message + "\nVous etes sur une case potion, c'est une " + potion.getName() + ", elle vous rend " + potion.getPointsDeVie() + " points de vie";
                 ((LocalHero) hero).setNiveauVie(hero.getLife() + potion.getPointsDeVie());
-                if (hero.getLife() > ((LocalHero) hero).getMaxLife()){
+                if (hero.getLife() > ((LocalHero) hero).getMaxLife()) {
                     ((LocalHero) hero).setNiveauVie(((LocalHero) hero).getMaxLife());
                     message = message + "\nVotre vie est au maximum !";
                 }
@@ -194,7 +213,7 @@ public class Warriors implements WarriorsAPI {
                     ((LocalHero) hero).setArme(arme);
                     message = message + "\nVous etes sur une case arme, c'est une " + arme.getName() + ", elle vous octroie +" + arme.getPointsAttaque() + " points d'attaque";
                     ((LocalHero) hero).setNiveauAttaque(hero.getAttackLevel() + arme.getPointsAttaque());
-                    if (hero.getAttackLevel() > ((LocalHero) hero).getMaxAttack()){
+                    if (hero.getAttackLevel() > ((LocalHero) hero).getMaxAttack()) {
                         ((LocalHero) hero).setNiveauAttaque(((LocalHero) hero).getMaxAttack());
                         message = message + "\nVotre niveau d'attaque est au maximum !";
                     }
@@ -208,7 +227,7 @@ public class Warriors implements WarriorsAPI {
                     ((LocalHero) hero).setSort(sort);
                     message = message + "\nVous etes sur une case sort, c'est un " + sort.getName() + ", il vous octroie +" + sort.getPointsAttaque() + " points d'attaque";
                     ((LocalHero) hero).setNiveauAttaque(hero.getAttackLevel() + sort.getPointsAttaque());
-                    if (hero.getAttackLevel() > ((LocalHero) hero).getMaxAttack()){
+                    if (hero.getAttackLevel() > ((LocalHero) hero).getMaxAttack()) {
                         ((LocalHero) hero).setNiveauAttaque(((LocalHero) hero).getMaxAttack());
                         message = message + "\nVotre niveau d'attaque est au maximum !";
                     }
@@ -216,7 +235,7 @@ public class Warriors implements WarriorsAPI {
                     message = message + "\nVous etes sur une case sort, c'est un(e) " + sort.getName() + ", il (elle) vous est inutile";
                 }
             }
-            if (hero.getLife()==0){
+            if (hero.getLife() == 0) {
                 this.gameState.setGameStatus(GameStatus.GAME_OVER);
                 message = message + "\nVous etes mort ahahahah !!!!!";
             }
@@ -226,6 +245,9 @@ public class Warriors implements WarriorsAPI {
         return gameState;
     }
 
+    /**
+     * @return un chiffre aléatoire entre 1 et 6
+     */
     private int lancerDe() {
         Random rand = new Random();
         return rand.nextInt(6) + 1;

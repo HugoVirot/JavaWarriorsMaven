@@ -10,17 +10,26 @@ public class Scenario {
     private int index;
     private Random rand;
 
+
     public Scenario() {
         this.rand = new Random();
         this.scenario = null;
     }
 
+    /**
+     *
+     * @param scenario
+     */
     public Scenario(ArrayList scenario) {
         this.rand = new Random();
         this.scenario = scenario;
         this.index = 0;
     }
 
+    /**
+     *
+     * @return
+     */
     public int lancerD() {
         int valeurD = 0;
         if (scenario == null) {
