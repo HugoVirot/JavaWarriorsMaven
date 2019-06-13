@@ -25,13 +25,12 @@ public class GameState implements warriors.contracts.GameState {
         this.gameStatus = GameStatus.IN_PROGRESS;
     }
 
-
     @Override
     public String getGameId() {
         return "g6df54gdf654gdf64";
     }
 
-    @Override
+
     public String getPlayerName() {
         return playerName;
     }

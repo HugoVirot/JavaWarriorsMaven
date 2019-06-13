@@ -2,6 +2,9 @@ package warriors.client.console;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.*;
 
 import warriors.contracts.GameState;
@@ -9,6 +12,8 @@ import warriors.contracts.GameStatus;
 import warriors.contracts.Hero;
 import warriors.contracts.Map;
 import warriors.contracts.WarriorsAPI;
+import warriors.engine.Connect;
+import warriors.engine.Guerrier;
 import warriors.engine.Scenario;
 import warriors.engine.Warriors;
 
@@ -21,11 +26,20 @@ public class ClientConsole {
         ArrayList nbreDList = new ArrayList<>();
         Scenario scenario;
 
+        Connect connexion = new Connect();
         try {
+            connexion.getHeroes();
+            connexion.getHero(1);
+            Hero herotemp = new Guerrier("CECI EST UN NOUVEAU PERSO BANG BANG","img",66,66,856);
+            connexion.createHero(herotemp);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
+        try {
             //List<ArrayList> listeScenario = new ArrayList<>();
-
             Scanner scanner = null;
+
             scanner = new Scanner(new File(args[0]));
             System.out.println("Scenario debug");
             Scanner dataScanner = null;
@@ -34,7 +48,7 @@ public class ClientConsole {
             while (scanner.hasNextLine()) {
                 String line = scanner.next();
                 String[] valeurCase = line.split(",");
-                for (int i = 0; i<valeurCase.length; i++){
+                for (int i = 0; i < valeurCase.length; i++) {
                     listScenar.add(valeurCase);
                     System.out.println(valeurCase[i]);
                 }
@@ -52,18 +66,11 @@ public class ClientConsole {
                 }
             }
             */
-
-
             scanner.close();
             System.out.println(nbreDList);
             scenario = new Scenario(nbreDList);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        }catch (Exception e) {
             System.out.println("Jeu lancer sans scenario");
-
-            scenario = new Scenario();
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println();
             scenario = new Scenario();
         }
 

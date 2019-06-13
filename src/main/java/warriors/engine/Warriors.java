@@ -5,6 +5,7 @@ import warriors.contracts.GameState;
 import warriors.contracts.Hero;
 import warriors.contracts.Map;
 
+import javax.naming.ContextNotEmptyException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -17,14 +18,18 @@ public class Warriors implements WarriorsAPI {
 
     public Warriors() {
         this.listeHeros = new ArrayList<Hero>();
-        Hero nouveauHeros1 = new Guerrier("Benji", "benji.jpg", 10, 6);
-        Hero nouveauHeros2 = new Guerrier("Toinou", "toinou.jpg", 8, 9);
-        Hero nouveauHeros3 = new Magicien("Arthar", "arthur.jpg", 1, 1);
-        Hero nouveauHeros4 = new Magicien("Hugo", "hugo.jpg", 4, 15);
+        Hero nouveauHeros1 = new Guerrier("Benji", "benji.jpg", 10, 6,653);
+        Hero nouveauHeros2 = new Guerrier("Toinou", "toinou.jpg", 8, 9,951);
+        Hero nouveauHeros3 = new Magicien("Arthar", "arthur.jpg", 1, 1,853);
+        Hero nouveauHeros4 = new Magicien("Hugo", "hugo.jpg", 4, 15,753);
         listeHeros.add(nouveauHeros1);
         listeHeros.add(nouveauHeros2);
         listeHeros.add(nouveauHeros3);
         listeHeros.add(nouveauHeros4);
+
+        Connect connexion = new Connect();
+        connexion.updateHero(nouveauHeros1);
+        //connexion.deleteHero();
 
         this.listeMap = new ArrayList<>();
         warriors.engine.Map nouvelleMap1 = new warriors.engine.Map("CampusMap", 64);

@@ -7,11 +7,13 @@ public abstract class LocalHero implements warriors.contracts.Hero {
     protected int niveauAttaque;
     protected Arme arme;
     protected Sort sort;
+    protected int id;
 
     public LocalHero() {
     }
 
-    public LocalHero(String nomWarrior, String imageWarrior, int niveauVieWarrior, int niveauAttaqueWarrior) {
+    public LocalHero(String nomWarrior, String imageWarrior, int niveauVieWarrior, int niveauAttaqueWarrior, int identifiant) {
+        id = identifiant;
         nom = nomWarrior;
         image = imageWarrior;
         niveauVie = niveauVieWarrior;
@@ -22,13 +24,11 @@ public abstract class LocalHero implements warriors.contracts.Hero {
         return arme;
     }
 
-    public void setArme(Arme arme)
-    {
+    public void setArme(Arme arme) {
         this.arme = arme;
     }
 
-    public void setSort(Sort sort)
-    {
+    public void setSort(Sort sort) {
         this.sort = sort;
     }
 
@@ -60,18 +60,22 @@ public abstract class LocalHero implements warriors.contracts.Hero {
         return niveauAttaque;
     }
 
+    public int getId() {
+        return id;
+    }
+
     @Override
     public String toString() {
         return "Vous etes " + nom + " voici vos caracteristiques : niveau d'attaque : " + niveauAttaque + " votre niveau de vie : " + niveauVie;
     }
 
-    public void deleteArme(){
+    public void deleteArme() {
         if (this.arme != null) {
             niveauAttaque = niveauAttaque - arme.getPointsAttaque();
         }
     }
 
-    public void deleteSort(){
+    public void deleteSort() {
         if (this.sort != null) {
             niveauAttaque = niveauAttaque - sort.getPointsAttaque();
         }

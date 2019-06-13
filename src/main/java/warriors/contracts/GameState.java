@@ -8,7 +8,8 @@ public interface GameState {
 	/**
 	 * @return the player name
 	 */
-	String getPlayerName();
+
+
 	
 	/**
 	 * @return the game unique ID
